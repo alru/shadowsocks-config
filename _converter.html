@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    label {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input[type="text"] {
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #333;
+      background: #e9ecef;
+      padding: 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+<h1>URL Converter</h1>
+<form id="converter-form">
+  <label for="proxy-name">Server Name:</label>
+  <input type="text" id="proxy-name" name="proxy-name" required><br><br>
+  <label for="ss-url">SS URL:</label>
+  <input type="text" id="ss-url" name="ss-url" required><br><br>
+  <button type="submit">Convert</button>
+</form>
+<h2>Result:</h2>
+<p id="result"></p>
+
+<script>
+  document.getElementById('converter-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const proxyName = document.getElementById('proxy-name').value;
+    const ssUrl = document.getElementById('ss-url').value.replace('ss://', '');
+    const [base64Part, rest] = ssUrl.split('@');
+    const [ipPort] = rest.split('/');
+
+    const decoded = atob(base64Part);
+    const [encryptMethod, password] = decoded.split(':');
+    const [ip, port] = ipPort.split(':');
+
+    const result = `${proxyName} = ss, ${ip}, ${port}, encrypt-method=${encryptMethod}, password=${password}, udp-relay=false`;
+    document.getElementById('result').textContent = result;
+  });
+</script>
+</body>
+</html>
