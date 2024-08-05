@@ -46,8 +46,6 @@
 <body>
 <h1>URL Converter</h1>
 <form id="converter-form">
-  <label for="proxy-name">Server Name:</label>
-  <input type="text" id="proxy-name" name="proxy-name" required><br><br>
   <label for="ss-url">SS URL:</label>
   <input type="text" id="ss-url" name="ss-url" required><br><br>
   <button type="submit">Convert</button>
@@ -59,7 +57,7 @@
   document.getElementById('converter-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const proxyName = document.getElementById('proxy-name').value;
+    const proxyName = 'proxyServer';
     const ssUrl = document.getElementById('ss-url').value.replace('ss://', '');
     const [base64Part, rest] = ssUrl.split('@');
     const [ipPort] = rest.split('/');
